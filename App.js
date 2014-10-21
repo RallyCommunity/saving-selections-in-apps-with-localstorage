@@ -44,6 +44,7 @@ Ext.define('CustomApp', {
     _setStorage: function() {
         localStorage.setItem('StateFiltervalue',Ext.getCmp('StateCombobox').getValue());
         localStorage.setItem('ReleaseFiltervalue',Ext.getCmp('ReleaseCombobox').getValue());
+        console.log('localStorage State: ', localStorage.StateFiltervalue,', localStorage Release:',  localStorage.ReleaseFiltervalue);
         this._getFilter();
     },
     
@@ -80,7 +81,6 @@ Ext.define('CustomApp', {
         return filter;
     },
     _makeGrid:function(filter){
-        console.log("making a grid");
        this._myGrid = Ext.create('Rally.ui.grid.Grid', {
             itemId:'defects-grid',
             columnCfgs: [
