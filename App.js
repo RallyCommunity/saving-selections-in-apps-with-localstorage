@@ -2,7 +2,7 @@ Ext.define('CustomApp', {
     extend: 'Rally.app.App',
     componentCls: 'app',
     items: [
-        {html:'Select a Filter checkbox to filter the grid'},
+        {html:'Select a checkbox to filter the grid'},
         {
             xtype: 'container',
             itemId: 'StateFilter'
@@ -13,26 +13,26 @@ Ext.define('CustomApp', {
         }
         ],
     launch: function() {
-        document.body.style.cursor='default';
         this._createFilterBox('State');
         this._createFilterBox('Release');
     },
     _createFilterBox: function(property){
-        this.down('#'+property+'Filter').add({
+        this.down('#'+ property + 'Filter').add({
             xtype: 'checkbox',
             cls: 'filter',
-            boxLabel: 'Filter table by '+property,
-            id: property+'Checkbox',
-            scope: this,
-            handler: this._setStorage
+            boxLabel: 'Filter grid by '+ property,
+            id: property +'Checkbox',
+            value: localStorage.getItem(property +'Checkvalue'), //setting default value for checkbox
+            handler: this._setStorage,
+            scope: this
         });
         this.down('#'+property+'Filter').add({
             xtype: 'rallyattributecombobox',
             cls: 'filter',
-            id: property+'Combobox',
+            id: property +'Combobox',
             model: 'Defect',
             field: property,
-            value: localStorage.getItem(property+'Filtervalue'), //setting default value
+            value: localStorage.getItem(property + 'Filtervalue'), //setting default value for combobox
             listeners: {
                 select: this._setStorage,
                 ready: this._setStorage,
@@ -44,6 +44,8 @@ Ext.define('CustomApp', {
     _setStorage: function() {
         localStorage.setItem('StateFiltervalue',Ext.getCmp('StateCombobox').getValue());
         localStorage.setItem('ReleaseFiltervalue',Ext.getCmp('ReleaseCombobox').getValue());
+        localStorage.setItem('StateCheckvalue',Ext.getCmp('StateCheckbox').getValue());
+        localStorage.setItem('ReleaseCheckvalue',Ext.getCmp('ReleaseCheckbox').getValue());
         console.log('localStorage State: ', localStorage.StateFiltervalue,', localStorage Release:',  localStorage.ReleaseFiltervalue);
         this._getFilter();
     },
@@ -64,7 +66,7 @@ Ext.define('CustomApp', {
         
     _checkFilterStatus: function(property,filter){
         if (Ext.getCmp(property+'Checkbox').getValue()) {
-            var filterString=Ext.getCmp(property+'Combobox').getValue()+'';
+            var filterString=Ext.getCmp(property +'Combobox').getValue() +'';
             var filterArr=filterString.split(',');
             var propertyFilter=Ext.create('Rally.data.wsapi.Filter',{property: property, operator: '=', value: filterArr[0]});
             var i=1;
@@ -98,7 +100,5 @@ Ext.define('CustomApp', {
         });
        this.add(this._myGrid);
     }
-   
-
 });
 

@@ -1,8 +1,10 @@
-combobox default value
+saving selections in comboboxes and checkboxes via localstorage
 =========================
 
 ## Overview
 ![](pic.png)
+
+A few seconds of a [demo video](http://screencast.com/t/F4qoEKm7) on how selections in comboboxes and checkboxes are retained after page is reloaded
 
 This app is available AS IS. It is not supported by Rally support.
 ## License
